@@ -66,4 +66,5 @@ public class UserController implements UserControllerDoc {
     private UserDto convertModelToDto(User user) {
         return objectMapper.convertValue(user, UserDto.class);
     }
+
 }

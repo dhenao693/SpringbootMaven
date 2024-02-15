@@ -16,7 +16,7 @@ public class User {
     @Id
     @GenericGenerator(name = "SEQ_VALOR", strategy = "increment")
     @GeneratedValue(generator = "SEQ_VALOR")
-    @Column(name = "ID_USUARIO")
+    @Column(name = "IDUSUARIO")
     private long id;
 
     @ManyToOne(optional = false)
