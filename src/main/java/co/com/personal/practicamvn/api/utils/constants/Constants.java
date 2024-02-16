@@ -14,6 +14,6 @@ public final class Constants {
 
     public static final String JSON_DATA = "jsonData";
 
-    public static final String USER_NODE = "user";
+    public static final String USER_NODE = "userData";
 
 }

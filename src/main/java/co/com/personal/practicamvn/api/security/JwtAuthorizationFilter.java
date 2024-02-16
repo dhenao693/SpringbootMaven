@@ -241,12 +241,21 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
     private UserDto getUserFromJsonNode(JsonNode jsonNode) throws JsonProcessingException {
-        UserDto userDTO = UserDto.builder().id(Constants.USER_SERVICE).build();
+            UserDto userDTO;// = UserDto.builder().id(Constants.USER_SERVICE).build();
 
-        if (jsonNode.get(Constants.USER_NODE) != null) {
-            userDTO = objectMapper.readValue(jsonNode.get(Constants.USER_NODE).toString(), UserDto.class);
-            log.trace("UserDTO: {}", userDTO);
+        try {
+
+            if (jsonNode.get(Constants.USER_NODE) != null) {
+                userDTO = objectMapper.convertValue(jsonNode.get(Constants.USER_NODE).toString(), UserDto.class);
+            } else {
+                userDTO = objectMapper.convertValue(jsonNode, UserDto.class);
+            }
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException("No se posee usuario de solicitud", e);
         }
+
+        log.trace("UserDTO: {}", userDTO);
 
         return userDTO;
     }

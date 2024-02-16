@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,4 +31,11 @@ public class UserCrud implements UserCrudServices {
     public List<User> findByFilters(Long id, String user, String password, String userCreate, String dateCreate) throws EntityNotFoundException {
         return userCrudRepository.findByFilters(id,user, password, userCreate, dateCreate);
     }
+
+    @Override
+    public Optional<User> findByID(Long id) throws EntityNotFoundException {
+        return userCrudRepository.findById(id);
+    }
+
+
 }

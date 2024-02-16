@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityNotFoundException;
@@ -77,5 +78,23 @@ public interface UserControllerDoc {
             @RequestParam(name = "user", required = false) final String user,
             @RequestParam(name = "userCreate", required = false) final String userCreate,
             @RequestParam(name = "dateCreate", required = false) final String dateCreate
+    ) throws EntityNotFoundException;
+
+
+
+    @Operation(summary = "Find a user by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Client retrieved successfully",
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))
+                    }
+            )
+    })
+    ResponseEntity<ApiResponseDTO<List<UserDto>>> findUserById(
+            @RequestHeader("Host") final String hostName,
+            @RequestParam(name = "id", required = false) final Long id
     ) throws EntityNotFoundException;
 }

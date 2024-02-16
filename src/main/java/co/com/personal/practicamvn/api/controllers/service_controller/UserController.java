@@ -8,13 +8,16 @@ import co.com.personal.practicamvn.api.entities.User;
 import co.com.personal.practicamvn.api.services.implementation.UserCrud;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,9 +28,8 @@ public class UserController implements UserControllerDoc {
     private final ObjectMapper objectMapper;
     private final UserCrud userCrud;
 
-    @PostMapping()
+    @PostMapping("/createUser")
     public ResponseEntity<ApiResponseDTO<UserDto>> save(User user) {
-
         final User userSaved = userCrud.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponseDTO.<UserDto>builder()
                 .code(HttpStatus.CREATED.value()).message("Client saved successfully")
@@ -55,6 +57,22 @@ public class UserController implements UserControllerDoc {
             @RequestParam(name = "dateCreate", required = false) final String dateCreate)
             throws EntityNotFoundException {
         List<User> userList = userCrud.findByFilters(id, user, password, userCreate, dateCreate);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDTO.<List<UserDto>>builder()
+                .code(HttpStatus.OK.value()).message("Client list retrieved successfully")
+                .data(userList.stream().map(
+                        this::convertModelToDto
+                ).collect(Collectors.toList())).build());
+    }
+
+    @GetMapping(path = "/findUserById", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<ApiResponseDTO<List<UserDto>>> findUserById(
+            @RequestHeader("Host") final String hostName,
+            @RequestParam(name = "id", required = false) final Long id)
+            throws EntityNotFoundException {
+
+        System.out.println(hostName);
+        Optional<User> userList = userCrud.findByID(id);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDTO.<List<UserDto>>builder()
                 .code(HttpStatus.OK.value()).message("Client list retrieved successfully")
                 .data(userList.stream().map(

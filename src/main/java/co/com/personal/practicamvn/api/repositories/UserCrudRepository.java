@@ -1,12 +1,13 @@
 package co.com.personal.practicamvn.api.repositories;
 
 import co.com.personal.practicamvn.api.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface    UserCrudRepository extends CrudRepository<User, Long> {
+public interface    UserCrudRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE" +
             "(:id is null or u.id  = :id) " +
             " AND (:user is null or u.user  = :user) " +

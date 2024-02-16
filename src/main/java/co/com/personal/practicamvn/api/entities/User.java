@@ -29,10 +29,10 @@ public class User {
     @Column(name = "CONTRASE\u00D1A")
     private String password;
 
-    @Column(name = "USUARIO_CREACION")
+    @Column(name = "USUARIOCREACION")
     private String userCreate;
 
-    @Column(name = "FECHA_CREACION")
+    @Column(name = "FECHACREACION")
     private String dateCreate;
 
 }
