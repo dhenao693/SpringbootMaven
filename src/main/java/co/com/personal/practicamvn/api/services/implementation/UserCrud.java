@@ -15,8 +15,6 @@ import java.util.List;
 public class UserCrud implements UserCrudServices {
     private final UserCrudRepository userCrudRepository;
 
-
-
     public User save(User user) {
         return userCrudRepository.save(user);
     }
@@ -28,8 +26,6 @@ public class UserCrud implements UserCrudServices {
             throw new EntityNotFoundException("The client does not exist");
         }
     }
-
-
 
     public List<User> findByFilters(Long id, String user, String password, String userCreate, String dateCreate) throws EntityNotFoundException {
         return userCrudRepository.findByFilters(id,user, password, userCreate, dateCreate);

@@ -7,6 +7,7 @@ import co.com.personal.practicamvn.api.dtos.security.ApiResponseDTO;
 import co.com.personal.practicamvn.api.entities.User;
 import co.com.personal.practicamvn.api.services.implementation.UserCrud;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,20 +20,18 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/userCrud")
 @CrossOrigin(origins = "*")
+@AllArgsConstructor
 public class UserController implements UserControllerDoc {
     private final ObjectMapper objectMapper;
     private final UserCrud userCrud;
 
-    public UserController(ObjectMapper objectMapper, UserCrud userCrud) {
-        this.objectMapper = objectMapper;
-        this.userCrud = userCrud;
-    }
-
-    //FALLA EL INSERT; REVISAR PORQUE
     @PostMapping()
     public ResponseEntity<ApiResponseDTO<UserDto>> save(User user) {
+
         final User userSaved = userCrud.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponseDTO.<UserDto>builder().code(HttpStatus.CREATED.value()).message("Client saved successfully").data(objectMapper.convertValue(userSaved, UserDto.class)).build());
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponseDTO.<UserDto>builder()
+                .code(HttpStatus.CREATED.value()).message("Client saved successfully")
+                .data(objectMapper.convertValue(userSaved, UserDto.class)).build());
     }
 
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
