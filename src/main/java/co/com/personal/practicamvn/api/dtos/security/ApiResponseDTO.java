@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "ApiResponseDTO")
 public class ApiResponseDTO<T> {
 

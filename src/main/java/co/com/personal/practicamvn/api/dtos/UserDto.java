@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserDto {
     private long id;
     private UserInfoContactDTO idUserInfo;

@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class CompanyDTO implements Serializable {
     private static final long serialVersionUID = -2780880194250415564L;
     private Long id;
